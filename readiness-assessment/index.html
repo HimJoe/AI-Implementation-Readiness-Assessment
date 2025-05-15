@@ -1,3 +1,5 @@
+<!-- Add jsPDF for report generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -462,6 +464,19 @@
             </div>
         </div>
     </footer>
+    <!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Tool-specific JavaScript -->
+<script src="./script.js"></script>
+
+<!-- Debug helper -->
+<script>
+    console.log('Readiness Assessment tool loaded');
+    window.addEventListener('error', function(e) {
+        console.error('JavaScript error:', e.message, 'at', e.filename, 'line', e.lineno);
+    });
+</script>
 </body>
 </html>
 <script>
@@ -471,4 +486,10 @@
         console.log('Error:', message, 'at', source, lineno, colno);
         return true;
     };
+    <!-- Change absolute paths to relative paths -->
+<link href="./styles.css" rel="stylesheet">
+<script src="./script.js"></script>
+
+<!-- Tool-specific JavaScript -->
+<script src="./script.js">
 </script>
