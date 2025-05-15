@@ -464,3 +464,11 @@
     </footer>
 </body>
 </html>
+<script>
+    // This helps identify any JavaScript errors in the console
+    console.log('Script is running in [Tool Name]');
+    window.onerror = function(message, source, lineno, colno, error) {
+        console.log('Error:', message, 'at', source, lineno, colno);
+        return true;
+    };
+</script>
