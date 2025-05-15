@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media AI Readiness Assessment | Himanshu Joshi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-bg {
+            background-image: linear-gradient(135deg, #1a365d 0%, #2a4365 50%, #2c5282 100%);
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .media-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: #3182ce;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+        .score-indicator {
+            transition: width 1s ease-in-out;
+        }
+        .footer-logo {
+            filter: brightness(0) invert(1);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .footer-logo:hover {
+            opacity: 1;
+        }
+        .recommendation-card {
+            border-left: 4px solid #3182ce;
+            background-color: #ebf8ff;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(49, 130, 206, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(49, 130, 206, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(49, 130, 206, 0); }
+        }
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+        .category-header {
+            position: relative;
+        }
+        .category-icon {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-chart-network text-2xl"></i>
+                <span class="font-bold text-xl">MediaAI Toolkit</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="nav-item py-2 px-1 font-medium text-white">Readiness Assessment</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">Architecture Framework</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">Implementation Roadmap</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">ROI Calculator</a>
+            </div>
+            <div>
+                <button class="bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
+                    <i class="fas fa-user mr-2"></i>Media Executive Portal
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Media AI Implementation Readiness Assessment</h1>
+                <p class="text-xl mb-8">Evaluate your organization's readiness for AI adoption and identify key focus areas for success.</p>
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-pie text-blue-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Based on the Reuters Institute Digital News Report 2024</p>
+                        <p>78% of media organizations deploy AI, but only 23% report significant business impact</p>
+                    </div>
+                </div>
+                <button class="bg-white text-blue-800 hover:bg-blue-100 py-3 px-6 rounded-lg font-bold shadow-lg transition-colors duration-300">
+                    Begin Assessment <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Assessment Introduction -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+                <div class="flex items-start mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-clipboard-check text-blue-700 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Media AI Readiness Assessment</h2>
+                        <p class="text-gray-600 mb-4">This assessment tool helps media organizations evaluate their readiness for strategic AI implementation across five key dimensions that determine success.</p>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 text-sm text-blue-800">
+                            <p class="font-medium mb-1">Industry Insight:</p>
+                            <p>According to our research, the implementation gap between AI vision and operational reality is the primary reason 63% of media AI projects fail to deliver projected business value.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+                    <div class="flex flex-col items-center bg-gray-50 rounded-lg p-4 card relative">
+                        <div class="media-badge">1</div>
+                        <i class="fas fa-server text-blue-700 text-3xl mb-3"></i>
+                        <h3 class="font-bold text-center mb-1">Technical Infrastructure</h3>
+                        <p class="text-gray-600 text-sm text-center">API capability, data pipelines, and computing resources</p>
+                    </div>
+                    <div class="flex flex-col items-center bg-gray-50 rounded-lg p-4 card relative">
+                        <div class="media-badge">2</div>
+                        <i class="fas fa-database text-blue-700 text-3xl mb-3"></i>
+                        <h3 class="font-bold text-center mb-1">Data Readiness</h3>
+                        <p class="text-gray-600 text-sm text-center">Quality, accessibility, and metadata richness</p>
+                    </div>
+                    <div class="flex flex-col items-center bg-gray-50 rounded-lg p-4 card relative">
+                        <div class="media-badge">3</div>
+                        <i class="fas fa-users-cog text-blue-700 text-3xl mb-3"></i>
+                        <h3 class="font-bold text-center mb-1">Organizational</h3>
+                        <p class="text-gray-600 text-sm text-center">Leadership, skills, and culture alignment</p>
+                    </div>
+                    <div class="flex flex-col items-center bg-gray-50 rounded-lg p-4 card relative">
+                        <div class="media-badge">4</div>
+                        <i class="fas fa-bullseye text-blue-700 text-3xl mb-3"></i>
+                        <h3 class="font-bold text-center mb-1">Use Cases</h3>
+                        <p class="text-gray-600 text-sm text-center">Clarity, prioritization, and success metrics</p>
+                    </div>
+                    <div class="flex flex-col items-center bg-gray-50 rounded-lg p-4 card relative">
+                        <div class="media-badge">5</div>
+                        <i class="fas fa-balance-scale text-blue-700 text-3xl mb-3"></i>
+                        <h3 class="font-bold text-center mb-1">Governance</h3>
+                        <p class="text-gray-600 text-sm text-center">Ethics, oversight, and quality assurance</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Category Section -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-10 relative">
+                <div class="category-header mb-6">
+                    <div class="category-icon">
+                        <i class="fas fa-server text-blue-700"></i>
+                    </div>
+                    <h3 class="text-xl font-bold ml-6">Technical Infrastructure Assessment</h3>
+                    <p class="text-gray-600 ml-6">Evaluate your organization's technical readiness for AI implementation</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold mb-2">How would you rate your current technical infrastructure for AI integration?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">1.</span> Legacy systems with limited extensibility
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">2.</span> Mixed infrastructure with some modern components
+                        </button>
+                        <button class="p-3 border border-blue-500 bg-blue-50 rounded-lg text-left text-sm">
+                            <span class="font-medium">3.</span> Modern, flexible architecture with some API capabilities
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">4.</span> Advanced infrastructure with comprehensive API support
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">5.</span> Cloud-native, microservices architecture optimized for AI
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold mb-2">What level of AI/ML expertise exists within your technical teams?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">1.</span> No dedicated AI expertise
+                        </button>
+                        <button class="p-3 border border-blue-500 bg-blue-50 rounded-lg text-left text-sm">
+                            <span class="font-medium">2.</span> Small team with basic ML knowledge
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">3.</span> Dedicated team with implementation experience
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">4.</span> Advanced team with production ML systems experience
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">5.</span> Expert team with deep experience across multiple AI domains
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h4 class="font-bold mb-2">How would you characterize your current data processing capabilities?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">1.</span> Manual or batch processing only
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">2.</span> Basic ETL pipelines with limited automation
+                        </button>
+                        <button class="p-3 border border-blue-500 bg-blue-50 rounded-lg text-left text-sm">
+                            <span class="font-medium">3.</span> Automated pipelines with some real-time capabilities
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">4.</span> Advanced data infrastructure with streaming capabilities
+                        </button>
+                        <button class="p-3 border rounded-lg text-left text-sm hover:bg-gray-50 transition">
+                            <span class="font-medium">5.</span> Comprehensive real-time and batch processing with monitoring
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <div class="flex items-center mb-2">
+                        <span class="font-bold mr-4">Category Score:</span>
+                        <div class="w-full bg-gray-200 rounded-full h-4 flex-grow">
+                            <div class="bg-blue-600 h-4 rounded-full score-indicator" style="width: 53%"></div>
+                        </div>
+                        <span class="ml-4 font-bold">2.7/5.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Results Section -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+                <h3 class="text-xl font-bold mb-6">Your AI Implementation Readiness</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-2xl mb-3">2.7</div>
+                        <p class="font-bold">Technical</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-2xl mb-3">3.1</div>
+                        <p class="font-bold">Data</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-2xl mb-3">2.3</div>
+                        <p class="font-bold">Organizational</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-2xl mb-3">3.8</div>
+                        <p class="font-bold">Use Cases</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold text-2xl mb-3">2.0</div>
+                        <p class="font-bold">Governance</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="flex items-center mb-2">
+                        <span class="font-bold mr-4">Overall Readiness:</span>
+                        <div class="w-full bg-gray-200 rounded-full h-6 flex-grow">
+                            <div class="bg-blue-600 h-6 rounded-full flex items-center justify-center text-white text-sm font-medium score-indicator" style="width: 56%">
+                                2.8/5.0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="p-6 border rounded-lg bg-gray-50">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-700 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold">Your Maturity Level: Functional</h4>
+                                <p class="text-gray-600">Targeted production deployments with point solutions addressing specific needs</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative pt-8">
+                            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-between text-sm">
+                                <div>
+                                    <span class="bg-blue-100 flex items-center justify-center w-8 h-8 rounded-full">1</span>
+                                    <span class="block mt-1 font-medium">Experimental</span>
+                                </div>
+                                <div>
+                                    <span class="bg-blue-600 flex items-center justify-center w-8 h-8 rounded-full text-white">2</span>
+                                    <span class="block mt-1 font-medium">Functional</span>
+                                </div>
+                                <div>
+                                    <span class="bg-blue-100 flex items-center justify-center w-8 h-8 rounded-full">3</span>
+                                    <span class="block mt-1 font-medium">Integrated</span>
+                                </div>
+                                <div>
+                                    <span class="bg-blue-100 flex items-center justify-center w-8 h-8 rounded-full">4</span>
+                                    <span class="block mt-1 font-medium">Scalable</span>
+                                </div>
+                                <div>
+                                    <span class="bg-blue-100 flex items-center justify-center w-8 h-8 rounded-full">5</span>
+                                    <span class="block mt-1 font-medium">Transformative</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold mb-3">Priority Focus Areas</h4>
+                    <div class="recommendation-card p-4 mb-4">
+                        <h5 class="font-bold">Organizational Alignment</h5>
+                        <p class="text-sm">Most critical area for improvement based on your assessment</p>
+                    </div>
+                    
+                    <h4 class="font-bold mb-3">Key Recommendations</h4>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm mr-2">1</span>
+                            <span>Create cross-functional AI implementation team with editorial representation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                            <span>Develop AI champions program among editorial staff with focused training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm mr-2">3</span>
+                            <span>Create executive education program focused on media-specific AI applications</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm mr-2">4</span>
+                            <span>Establish clear AI vision and roadmap with executive sponsorship</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="flex justify-end">
+                        <a href="#" class="text-blue-600 font-medium hover:text-blue-800 transition">View detailed action plan <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300 pulse-btn">
+                        Download Full Assessment Report
+                    </button>
+                    <button class="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300">
+                        Continue to Architecture Planning
+                    </button>
+                </div>
+            </div>
+
+            <!-- Media-Specific Stats -->
+            <div class="bg-blue-800 text-white rounded-xl shadow-md p-8 mb-10">
+                <h3 class="text-xl font-bold mb-6">Media Industry AI Implementation Benchmarks</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-800 font-bold text-xl mr-4">
+                            78%
+                        </div>
+                        <p>of media organizations have deployed AI in some capacity</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-800 font-bold text-xl mr-4">
+                            23%
+                        </div>
+                        <p>report significant business impact from these implementations</p>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-800 font-bold text-xl mr-4">
+                            63%
+                        </div>
+                        <p>fail to deliver projected business value</p>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-sm opacity-80 mb-3">Data source: Reuters Institute Digital News Report 2024</p>
+                    <button class="bg-white text-blue-800 hover:bg-blue-100 py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
+                        View Industry Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">MediaAI Toolkit</h3>
+                    <p class="text-blue-200">Practical tools for media AI implementation</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-blue-800">
+                <p class="text-blue-200 mb-4 md:mb-0">© 2025 Himanshu Joshi. All rights reserved.</p>
+                <div class="flex items-center">
+                    <a href="https://github.com/HimJoe" class="text-blue-200 hover:text-white transition-colors flex items-center">
+                        <i class="fab fa-github mr-2"></i>
+                        github.com/HimJoe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
