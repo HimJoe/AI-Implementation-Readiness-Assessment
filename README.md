@@ -1,4 +1,4 @@
-# MediaAI Toolkit
+MediaAI-Toolkit
 
 A comprehensive collection of strategic tools to help media organizations successfully implement AI. Designed specifically for CTOs, CPOs, and other executives in media companies.
 
