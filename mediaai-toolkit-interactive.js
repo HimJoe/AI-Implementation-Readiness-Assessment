@@ -1,10 +1,12 @@
 /**
  * MediaAI Toolkit Interactive Features
  * This script adds interactivity to the MediaAI Toolkit HTML files
- * and provides PDF export functionality using the browser's print capabilities.
+ * Main functionality for GitHub Pages deployment
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('MediaAI Toolkit interactive features initialized');
+    
     // Make option cards interactive
     makeOptionsInteractive();
     
@@ -19,7 +21,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Mark challenge selection grid as multi-select
     markChallengeGridMultiSelect();
+    
+    // Highlight the current tool in navigation
+    highlightCurrentTool();
 });
+
+/**
+ * Highlights the current tool in the navigation
+ */
+function highlightCurrentTool() {
+    // Get the current path
+    const path = window.location.pathname;
+    
+    // Find all navigation links
+    const navLinks = document.querySelectorAll('.nav-item');
+    
+    // Loop through links and highlight the matching one
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && path.includes(href)) {
+            link.classList.add('text-white');
+            link.classList.remove('text-gray-200');
+            
+            // Add underline
+            const underline = document.createElement('div');
+            underline.className = 'w-full h-0.5 bg-white mt-1';
+            link.appendChild(underline);
+        }
+    });
+}
 
 /**
  * Makes option cards clickable and handles selection state
@@ -37,6 +67,7 @@ function makeOptionsInteractive() {
         card.addEventListener('click', function() {
             // Get the parent grid
             const parentGrid = this.closest('.grid');
+            if (!parentGrid) return;
             
             // Check if this is a multi-select grid
             const isMultiSelect = parentGrid.classList.contains('multi-select');
@@ -88,6 +119,33 @@ function makeOptionsInteractive() {
                 // Show checkmark
                 toggleCheckmark(this, true);
             }
+        });
+    });
+    
+    // Also handle direct button options in grids
+    const gridButtons = document.querySelectorAll('.grid button');
+    gridButtons.forEach(button => {
+        button.style.cursor = 'pointer';
+        
+        button.addEventListener('click', function() {
+            // Get parent question container
+            const parentContainer = this.closest('.mb-8');
+            if (!parentContainer) return;
+            
+            // Get all buttons in this container
+            const buttons = parentContainer.querySelectorAll('button');
+            
+            // Deselect all buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'border-blue-500');
+                if (!btn.classList.contains('bg-blue-50')) {
+                    btn.classList.add('hover:bg-gray-50', 'border-gray-200');
+                }
+            });
+            
+            // Select this button
+            this.classList.add('bg-blue-50', 'border-blue-500');
+            this.classList.remove('hover:bg-gray-50', 'border-gray-200');
         });
     });
 }
@@ -249,7 +307,7 @@ function scrollToResults() {
  */
 function addPdfExport() {
     // Find download buttons to add PDF export buttons next to them
-    const downloadButtons = document.querySelectorAll('button:has(i.fas.fa-download)');
+    const downloadButtons = document.querySelectorAll('button:contains("Download")');
     
     // Process download buttons
     downloadButtons.forEach(button => {
@@ -264,27 +322,10 @@ function addPdfExport() {
     });
     
     // Find existing PDF buttons
-    const pdfButtons = document.querySelectorAll('button:has(i.fas.fa-file-pdf)');
+    const pdfButtons = document.querySelectorAll('button:contains("PDF")');
     pdfButtons.forEach(button => {
         button.addEventListener('click', printAsPdf);
     });
-    
-    // If no buttons found, add one to the bottom of the page
-    if (downloadButtons.length === 0 && pdfButtons.length === 0) {
-        const mainContent = document.querySelector('main');
-        if (mainContent) {
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'flex justify-center mt-8';
-            
-            const pdfButton = document.createElement('button');
-            pdfButton.className = 'bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300';
-            pdfButton.innerHTML = '<i class="fas fa-file-pdf mr-2"></i> Save Results as PDF';
-            pdfButton.addEventListener('click', printAsPdf);
-            
-            buttonContainer.appendChild(pdfButton);
-            mainContent.appendChild(buttonContainer);
-        }
-    }
 }
 
 /**
@@ -342,6 +383,8 @@ function initializeToggles() {
         button.addEventListener('click', function() {
             // Deactivate all toggle buttons in the group
             const buttonGroup = this.closest('div');
+            if (!buttonGroup) return;
+            
             const groupButtons = buttonGroup.querySelectorAll('.toggle-btn');
             
             groupButtons.forEach(btn => {
@@ -378,6 +421,7 @@ function markChallengeGridMultiSelect() {
         // Look for the next grid element
         while (grid && !grid.classList.contains('grid')) {
             grid = grid.nextElementSibling;
+            if (!grid) break;
         }
         
         // Mark as multi-select if found
