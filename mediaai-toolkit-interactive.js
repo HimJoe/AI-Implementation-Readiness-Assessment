@@ -3,7 +3,6 @@
  * This script adds interactivity to the MediaAI Toolkit HTML files
  * Main functionality for GitHub Pages deployment
  */
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('MediaAI Toolkit interactive features initialized');
     
