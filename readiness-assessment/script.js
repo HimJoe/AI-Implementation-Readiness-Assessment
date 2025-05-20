@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Governance"
     ];
     
-    // Initialize the visibility of categories
-    initializeCategoryVisibility();
+    // Set initial values from demo elements
+    initializeScores();
     
     // Add event listeners to option buttons
     const optionButtons = document.querySelectorAll('.option-card button, .grid button');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Add event listeners to navigation buttons
-    const nextButtons = document.querySelectorAll('.next-category, button:contains("Continue")');
+    const nextButtons = document.querySelectorAll('.next-category');
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Move to next category if valid
@@ -67,18 +67,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentCategory++;
                 updateCategoryVisibility();
                 window.scrollTo(0, 0); // Scroll to top for new category
+            } else {
+                // Show results if at the last category
+                showResults();
             }
         });
     });
     
     // Previous category buttons
-    const prevButtons = document.querySelectorAll('.prev-category, button:contains("Back")');
+    const prevButtons = document.querySelectorAll('.prev-category');
     prevButtons.forEach(button => {
         button.addEventListener('click', function() {
             if (currentCategory > 0) {
                 currentCategory--;
                 updateCategoryVisibility();
                 window.scrollTo(0, 0); // Scroll to top for new category
+            } else {
+                // If at first category, go back to introduction
+                showIntroduction();
             }
         });
     });
@@ -91,47 +97,81 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize category visibility
-    function initializeCategoryVisibility() {
-        const categoryContainers = document.querySelectorAll('.category-section, .bg-white.rounded-xl.shadow-md.p-8.mb-10');
-        
-        // Hide all categories except the first one
-        categoryContainers.forEach((container, index) => {
-            if (index === 0 || container.classList.contains('introduction')) {
-                container.style.display = 'block';
-            } else {
-                container.style.display = 'none';
+    // Initialize scores from existing UI elements
+    function initializeScores() {
+        // This function sets initial scores based on any pre-selected options
+        // in the demo interface for a better user experience
+        const indicators = document.querySelectorAll('.score-indicator[data-category]');
+        indicators.forEach(indicator => {
+            const category = parseInt(indicator.getAttribute('data-category'));
+            if (!isNaN(category)) {
+                const widthStr = indicator.style.width;
+                if (widthStr) {
+                    const width = parseInt(widthStr);
+                    if (!isNaN(width)) {
+                        // Convert width percentage to a score (5.0 scale)
+                        const score = (width / 100) * 5;
+                        categoryScores[category] = score;
+                        answeredQuestions[category] = 1; // Assume one question answered
+                    }
+                }
             }
         });
+        
+        // Update the displays with these initial values
+        updateScoreDisplay();
+    }
+    
+    // Show introduction, hide all categories
+    function showIntroduction() {
+        document.getElementById('introduction').style.display = 'block';
+        
+        // Hide all category sections
+        const categorySections = document.querySelectorAll('.category-section');
+        categorySections.forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Hide results section
+        document.getElementById('results-section').style.display = 'none';
+        
+        // Reset current category
+        currentCategory = 0;
+    }
+    
+    // Show results section, hide categories
+    function showResults() {
+        // Hide all category sections
+        const categorySections = document.querySelectorAll('.category-section');
+        categorySections.forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Hide introduction
+        document.getElementById('introduction').style.display = 'none';
+        
+        // Show results section
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Update scores one last time
+        updateScoreDisplay();
     }
     
     // Update category visibility based on current category
     function updateCategoryVisibility() {
-        const categoryContainers = document.querySelectorAll('.category-section, .bg-white.rounded-xl.shadow-md.p-8.mb-10');
-        
-        categoryContainers.forEach((container, index) => {
-            // Always show introduction and results sections
-            if (container.classList.contains('introduction') || 
-                container.classList.contains('results-section')) {
-                container.style.display = 'block';
-                return;
-            }
-            
-            // Show current category, hide others
-            if (index === currentCategory + 1) { // +1 because of the introduction section
-                container.style.display = 'block';
+        // Hide all category sections
+        const categorySections = document.querySelectorAll('.category-section');
+        categorySections.forEach((section, index) => {
+            if (index === currentCategory) {
+                section.style.display = 'block';
             } else {
-                container.style.display = 'none';
+                section.style.display = 'none';
             }
         });
         
-        // Show results section if all categories are complete
-        if (currentCategory === categoryNames.length - 1) {
-            const resultsSection = document.querySelector('.results-section');
-            if (resultsSection) {
-                resultsSection.style.display = 'block';
-            }
-        }
+        // Hide introduction and results
+        document.getElementById('introduction').style.display = 'none';
+        document.getElementById('results-section').style.display = 'none';
     }
     
     // Update score displays
@@ -316,5 +356,15 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error generating report:', error);
             alert('There was an error generating the report. Please check console for details.');
         }
+    }
+
+    // Set up the Begin Assessment button
+    const beginAssessmentBtn = document.getElementById('beginAssessment');
+    if (beginAssessmentBtn) {
+        beginAssessmentBtn.addEventListener('click', function() {
+            // Show the first category, hide introduction
+            document.getElementById('introduction').style.display = 'none';
+            document.getElementById('category1').style.display = 'block';
+        });
     }
 });
