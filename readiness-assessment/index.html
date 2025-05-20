@@ -1,32 +1,12 @@
-<nav class="bg-blue-900 text-white shadow-md">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <i class="fas fa-chart-network text-2xl"></i>
-            <a href="../index.html" class="font-bold text-xl">MediaAI Toolkit</a>
-        </div>
-        <div class="hidden md:flex space-x-8">
-            <a href="../readiness-assessment/index.html" class="nav-item py-2 px-1 font-medium text-white">Readiness Assessment</a>
-            <a href="../architecture-framework/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">Architecture Framework</a>
-            <a href="../roadmap-generator/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">Implementation Roadmap</a>
-            <a href="../roi-calculator/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">ROI Calculator</a>
-        </div>
-        <div>
-            <a href="https://github.com/HimJoe/MediaAI-Toolkit" class="bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
-                <i class="fab fa-github mr-2"></i>View on GitHub
-            </a>
-        </div>
-    </div>
-</nav>
-<!-- Add jsPDF for report generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media AI Readiness Assessment | Himanshu Joshi</title>
+    <title>Media AI Readiness Assessment | MediaAI Toolkit</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -119,18 +99,18 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-chart-network text-2xl"></i>
-                <span class="font-bold text-xl">MediaAI Toolkit</span>
+                <a href="../index.html" class="font-bold text-xl">MediaAI Toolkit</a>
             </div>
             <div class="hidden md:flex space-x-8">
-                <a href="#" class="nav-item py-2 px-1 font-medium text-white">Readiness Assessment</a>
-                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">Architecture Framework</a>
-                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">Implementation Roadmap</a>
-                <a href="#" class="nav-item py-2 px-1 font-medium text-blue-200">ROI Calculator</a>
+                <a href="../readiness-assessment/index.html" class="nav-item py-2 px-1 font-medium text-white">Readiness Assessment</a>
+                <a href="../architecture-framework/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">Architecture Framework</a>
+                <a href="../roadmap-generator/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">Implementation Roadmap</a>
+                <a href="../roi-calculator/index.html" class="nav-item py-2 px-1 font-medium text-blue-200">ROI Calculator</a>
             </div>
             <div>
-                <button class="bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
-                    <i class="fas fa-user mr-2"></i>Media Executive Portal
-                </button>
+                <a href="https://github.com/HimJoe/MediaAI-Toolkit" class="bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
+                    <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
             </div>
         </div>
     </nav>
@@ -150,7 +130,7 @@
                         <p>78% of media organizations deploy AI, but only 23% report significant business impact</p>
                     </div>
                 </div>
-                <button class="bg-white text-blue-800 hover:bg-blue-100 py-3 px-6 rounded-lg font-bold shadow-lg transition-colors duration-300">
+                <button id="beginAssessment" class="bg-white text-blue-800 hover:bg-blue-100 py-3 px-6 rounded-lg font-bold shadow-lg transition-colors duration-300">
                     Begin Assessment <i class="fas fa-arrow-right ml-2"></i>
                 </button>
             </div>
@@ -161,7 +141,7 @@
     <main class="container mx-auto px-4 py-12">
         <div class="max-w-4xl mx-auto">
             <!-- Assessment Introduction -->
-            <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <div id="introduction" class="bg-white rounded-xl shadow-md p-8 mb-10 introduction">
                 <div class="flex items-start mb-6">
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
                         <i class="fas fa-clipboard-check text-blue-700 text-xl"></i>
@@ -211,7 +191,7 @@
             </div>
 
             <!-- Sample Category Section -->
-            <div class="bg-white rounded-xl shadow-md p-8 mb-10 relative">
+            <div id="category1" class="bg-white rounded-xl shadow-md p-8 mb-10 relative category-section" style="display: none;">
                 <div class="category-header mb-6">
                     <div class="category-icon">
                         <i class="fas fa-server text-blue-700"></i>
@@ -287,15 +267,24 @@
                     <div class="flex items-center mb-2">
                         <span class="font-bold mr-4">Category Score:</span>
                         <div class="w-full bg-gray-200 rounded-full h-4 flex-grow">
-                            <div class="bg-blue-600 h-4 rounded-full score-indicator" style="width: 53%"></div>
+                            <div class="bg-blue-600 h-4 rounded-full score-indicator" data-category="0" style="width: 53%"></div>
                         </div>
-                        <span class="ml-4 font-bold">2.7/5.0</span>
+                        <span class="ml-4 font-bold score-text" data-category="0">2.7/5.0</span>
                     </div>
+                </div>
+                
+                <div class="flex justify-between mt-8">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg font-medium prev-category">
+                        <i class="fas fa-arrow-left mr-2"></i> Previous
+                    </button>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium next-category">
+                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
                 </div>
             </div>
 
             <!-- Sample Results Section -->
-            <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <div id="results-section" class="bg-white rounded-xl shadow-md p-8 mb-10 results-section" style="display: none;">
                 <h3 class="text-xl font-bold mb-6">Your AI Implementation Readiness</h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 text-center">
@@ -325,8 +314,8 @@
                     <div class="flex items-center mb-2">
                         <span class="font-bold mr-4">Overall Readiness:</span>
                         <div class="w-full bg-gray-200 rounded-full h-6 flex-grow">
-                            <div class="bg-blue-600 h-6 rounded-full flex items-center justify-center text-white text-sm font-medium score-indicator" style="width: 56%">
-                                2.8/5.0
+                            <div class="bg-blue-600 h-6 rounded-full flex items-center justify-center text-white text-sm font-medium score-indicator overall-indicator" style="width: 56%">
+                                <span class="overall-score">2.8/5.0</span>
                             </div>
                         </div>
                     </div>
@@ -410,9 +399,9 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300 pulse-btn">
                         Download Full Assessment Report
                     </button>
-                    <button class="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300">
+                    <a href="../architecture-framework/index.html" class="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-6 rounded-lg font-bold shadow-md transition-colors duration-300 inline-block text-center">
                         Continue to Architecture Planning
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -460,14 +449,8 @@
                     <p class="text-blue-200">Practical tools for media AI implementation</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                    <a href="https://github.com/HimJoe/MediaAI-Toolkit" class="text-white hover:text-blue-200 transition-colors">
                         <i class="fab fa-github text-2xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
-                        <i class="fab fa-linkedin text-2xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
-                        <i class="fab fa-twitter text-2xl"></i>
                     </a>
                 </div>
             </div>
@@ -483,32 +466,35 @@
             </div>
         </div>
     </footer>
-    <!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<!-- Tool-specific JavaScript -->
-<script src="./script.js"></script>
-
-<!-- Debug helper -->
-<script>
-    console.log('Readiness Assessment tool loaded');
-    window.addEventListener('error', function(e) {
-        console.error('JavaScript error:', e.message, 'at', e.filename, 'line', e.lineno);
-    });
-</script>
+    <!-- Main JS -->
+    <script src="../js/mediaai-toolkit-interactive.js"></script>
+    <script src="./script.js"></script>
+    
+    <!-- Assessment Start Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Begin Assessment button functionality
+            const beginButton = document.getElementById('beginAssessment');
+            if (beginButton) {
+                beginButton.addEventListener('click', function() {
+                    // Hide introduction, show first category
+                    const intro = document.getElementById('introduction');
+                    const category1 = document.getElementById('category1');
+                    
+                    if (intro && category1) {
+                        intro.style.display = 'none';
+                        category1.style.display = 'block';
+                        
+                        // Scroll to the top of the category
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
-<script>
-    // This helps identify any JavaScript errors in the console
-    console.log('Script is running in [Tool Name]');
-    window.onerror = function(message, source, lineno, colno, error) {
-        console.log('Error:', message, 'at', source, lineno, colno);
-        return true;
-    };
-    <!-- Change absolute paths to relative paths -->
-<link href="./styles.css" rel="stylesheet">
-<script src="./script.js"></script>
-
-<!-- Tool-specific JavaScript -->
-<script src="./script.js">
-</script>
