@@ -1,0 +1,303 @@
+/* 
+ * MediaAI Toolkit Interactive Styles
+ * Global CSS to enhance interactive elements across all toolkit components
+ * 
+ * @author Himanshu Joshi
+ * @version 1.0.0
+ * @copyright 2025
+ */
+
+/* Animation Effects */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+/* Entrance Animations */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Enhanced Interactive Elements */
+.option-card {
+    transition: all 0.3s ease;
+}
+
+.option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.option-card.selected {
+    border-width: 2px;
+}
+
+/* Button Enhancement */
+.pulse-btn {
+    animation: pulse 2s infinite;
+}
+
+.btn-transition {
+    transition: all 0.3s ease;
+}
+
+/* Improved Form Elements */
+.input-focus-effect {
+    transition: all 0.3s ease;
+}
+
+.input-focus-effect:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Tool-specific Styles */
+/* Assessment Tool */
+.assessment-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.assessment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.score-indicator {
+    transition: width 1.5s ease-in-out;
+}
+
+/* Architecture Tool */
+.step-transition {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.step-entering {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.step-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step-exiting {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.progress-completed {
+    transition: width 0.8s ease-in-out;
+}
+
+/* Roadmap Tool */
+.timeline-marker {
+    transition: background-color 0.5s ease;
+}
+
+.timeline-connector {
+    position: absolute;
+    top: 0;
+    left: 18px;
+    width: 4px;
+    background-color: #e5e7eb;
+    height: 0;
+    transition: height 2s ease-in-out;
+}
+
+.timeline-connector.active {
+    height: 100%;
+}
+
+/* ROI Calculator */
+.graph-bar {
+    transition: width 1.5s ease-in-out;
+}
+
+.toggle-btn {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.toggle-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.toggle-btn.active::after {
+    width: 100%;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    z-index: 50;
+    padding: 0.5rem 1rem;
+    background-color: #1f2937;
+    color: white;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    max-width: 250px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-1rem);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navigation Enhancement */
+.nav-item {
+    position: relative;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+.completion-indicator {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item.completed .completion-indicator {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Modal Styles */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 90%;
+    width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-backdrop.active .modal-content {
+    transform: translateY(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .option-card:hover {
+        transform: none;
+    }
+    
+    .assessment-card:hover {
+        transform: none;
+    }
+    
+    .input-focus-effect:focus {
+        transform: none;
+    }
+}
+
+/* Print Styles - for reports */
+@media print {
+    body {
+        background-color: white;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-full-width {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .page-break {
+        page-break-after: always;
+    }
+    
+    .preserve-on-print {
+        color: black !important;
+        background-color: white !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .notification, .tooltip, .modal-backdrop {
+        display: none !important;
+    }
+}
