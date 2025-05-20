@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media AI ROI Calculator | Himanshu Joshi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-bg {
+            background-image: linear-gradient(135deg, #7e22ce 0%, #a855f7 50%, #c084fc 100%);
+        }
+        .nav-item {
+            position: relative;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .input-group {
+            transition: all 0.3s ease;
+        }
+        .input-group:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(126, 34, 206, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(126, 34, 206, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(126, 34, 206, 0); }
+        }
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+        .dollar-sign {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+        .percent-sign {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+        .toggle-btn {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background-color: #7e22ce;
+            transition: width 0.3s ease;
+        }
+        .toggle-btn.active {
+            color: #7e22ce;
+        }
+        .toggle-btn.active::before {
+            width: 100%;
+        }
+        .publication-logo {
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .publication-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        .graph-bar {
+            transition: width 1.5s ease-in-out;
+        }
+        .ticker-tape {
+            overflow: hidden;
+            background-color: #f3f4f6;
+            white-space: nowrap;
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+            padding-right: 50px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .media-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 4px;
+            background-color: #f3f4f6;
+            color: #4b5563;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-purple-900 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-newspaper text-2xl"></i>
+                <span class="font-bold text-xl">MediaAI Toolkit</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="nav-item py-2 px-1 font-medium text-purple-200">Readiness Assessment</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-purple-200">Architecture Framework</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-purple-200">Implementation Roadmap</a>
+                <a href="#" class="nav-item py-2 px-1 font-medium text-white">ROI Calculator</a>
+            </div>
+            <div>
+                <button class="bg-purple-700 hover:bg-purple-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
+                    <i class="fas fa-user-edit mr-2"></i>Media Executive Portal
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ticker Tape News -->
+    <div class="ticker-tape py-2">
+        <div class="ticker-content">
+            <span class="media-tag bg-purple-100 text-purple-800">ROI INSIGHT</span> 63% of media AI projects fail to deliver projected business value 
+            <span class="mx-6">•</span>
+            <span class="media-tag bg-green-100 text-green-800">SUCCESS</span> Content creation AI implementations show average ROI of 142% after 2 years
+            <span class="mx-6">•</span>
+            <span class="media-tag bg-blue-100 text-blue-800">TREND</span> Organizations with clear success metrics show 3.2x higher ROI on AI implementations
+            <span class="mx-6">•</span>
+            <span class="media-tag bg-red-100 text-red-800">ALERT</span> 72% of projects lack defined success metrics and evaluation frameworks
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero-bg text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">AI ROI Calculator for Media Organizations</h1>
+                <p class="text-xl mb-8">Project the financial impact of AI implementation and build compelling business cases for executive approval.</p>
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-line text-purple-800 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Based on Industry Benchmarks & Implementation Data</p>
+                        <p>Create realistic financial projections using documented results from the media industry</p>
+                    </div>
+                </div>
+                <button class="bg-white text-purple-800 hover:bg-purple-100 py-3 px-6 rounded-lg font-bold shadow-lg transition-colors duration-300">
+                    Calculate Your ROI <i class="fas fa-calculator ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Calculator Introduction -->
+            <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+                <div class="flex items-start mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-calculator text-purple-700 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Media AI ROI Calculator</h2>
+                        <p class="text-gray-600 mb-4">This tool helps media organizations project the return on investment for AI implementation projects. Based on industry benchmarks and your organization's specific parameters, it provides first-year and five-year ROI projections.</p>
+                        <div class="bg-purple-50 border-l-4 border-purple-500 p-4 text-sm text-purple-800">
+                            <p class="font-medium mb-1">ROI Insight:</p>
+                            <p>Based on data from industry research, 63% of media AI projects fail to deliver projected business value. This ROI calculator helps create realistic financial projections based on documented industry results.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Form & Results -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Left column - Organization parameters -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-purple-100 rounded-full inline-flex items-center justify-center text-purple-700 mr-2">1</span>
+                        Organization Parameters
+                    </h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Organization Size</label>
+                        <div class="relative">
+                            <select class="w-full p-2 pl-3 pr-10 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>Small (5-20 content creators)</option>
+                                <option selected>Medium (20-100 content creators)</option>
+                                <option>Large (100-500 content creators)</option>
+                                <option>Enterprise (500+ content creators)</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Weekly Content Volume</label>
+                        <input type="number" value="100" class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                        <p class="text-xs text-gray-500 mt-1">Average number of content pieces published weekly</p>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Number of Content Creators</label>
+                        <input type="number" value="10" class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                        <p class="text-xs text-gray-500 mt-1">Including writers, editors, producers, etc.</p>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Average Hourly Rate</label>
+                        <div class="relative">
+                            <div class="dollar-sign">$</div>
+                            <input type="number" value="50" class="w-full p-2 pl-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Fully-loaded hourly cost of content staff</p>
+                    </div>
+                </div>
+                
+                <!-- Middle column - Implementation parameters -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-purple-100 rounded-full inline-flex items-center justify-center text-purple-700 mr-2">2</span>
+                        Implementation Parameters
+                    </h3>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Primary Use Case</label>
+                        <div class="relative">
+                            <select class="w-full p-2 pl-3 pr-10 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option selected>Content Creation & Enhancement</option>
+                                <option>Audience Intelligence & Personalization</option>
+                                <option>Operational Efficiency</option>
+                                <option>Business Model & Revenue Growth</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Implementation Scope</label>
+                        <div class="relative">
+                            <select class="w-full p-2 pl-3 pr-10 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option selected>Focused (single department/use case)</option>
+                                <option>Comprehensive (multiple departments)</option>
+                                <option>Enterprise (organization-wide)</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Existing AI Infrastructure</label>
+                        <div class="relative">
+                            <select class="w-full p-2 pl-3 pr-10 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option>Minimal (starting from scratch)</option>
+                                <option selected>Some (basic cloud/data capabilities)</option>
+                                <option>Extensive (advanced capabilities exist)</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Implementation Cost (Optional)</label>
+                        <div class="relative">
+                            <div class="dollar-sign">$</div>
+                            <input type="number" placeholder="Leave blank for auto-calculation" class="w-full p-2 pl-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Override the estimated implementation cost</p>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Annual Ongoing Cost (Optional)</label>
+                        <div class="relative">
+                            <div class="dollar-sign">$</div>
+                            <input type="number" placeholder="Leave blank for auto-calculation" class="w-full p-2 pl-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Override the estimated annual cost</p>
+                    </div>
+                </div>
+                
+                <!-- Right column - Benefit parameters -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-purple-100 rounded-full inline-flex items-center justify-center text-purple-700 mr-2">3</span>
+                        Benefit Parameters (Optional)
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Industry benchmarks will be used for any fields left blank.
+                    </p>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Efficiency Gain (%)</label>
+                        <div class="relative">
+                            <input type="number" placeholder="e.g., 30 for 30%" class="w-full p-2 pr-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                            <div class="percent-sign">%</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Time/resource savings from AI implementation</p>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Quality Improvement (%)</label>
+                        <div class="relative">
+                            <input type="number" placeholder="e.g., 20 for 20%" class="w-full p-2 pr-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                            <div class="percent-sign">%</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Content quality improvement estimates</p>
+                    </div>
+                    
+                    <div class="mb-4 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Audience Growth (%)</label>
+                        <div class="relative">
+                            <input type="number" placeholder="e.g., 15 for 15%" class="w-full p-2 pr-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                            <div class="percent-sign">%</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Expected audience/user growth from AI features</p>
+                    </div>
+                    
+                    <div class="mb-6 input-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Revenue Increase (%)</label>
+                        <div class="relative">
+                            <input type="number" placeholder="e.g., 10 for 10%" class="w-full p-2 pr-7 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                            <div class="percent-sign">%</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Direct revenue growth from AI implementation</p>
+                    </div>
+                    
+                    <button class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors pulse-btn">
+                        Calculate ROI
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ROI Results -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-chart-pie text-purple-600 mr-3"></i>
+                    ROI Projection
+                </h3>
+                
+                <div class="flex justify-between mb-6">
+                    <button class="toggle-btn py-2 font-medium active">
+                        Executive Summary
+                    </button>
+                    <button class="toggle-btn py-2 font-medium text-gray-500">
+                        Detailed Analysis
+                    </button>
+                    <button class="toggle-btn py-2 font-medium text-gray-500">
+                        Comparison View
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Cost summary -->
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">Investment</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">Implementation Cost</span>
+                                <span class="font-bold">$76,000</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">Annual Operating Cost</span>
+                                <span class="font-bold">$35,000</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">5-Year Total Cost</span>
+                                <span class="font-bold">$251,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Benefit summary -->
+                    <div>
+                        <h4 class="font-medium text-lg mb-4">Benefits</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">Annual Efficiency Savings</span>
+                                <span class="font-bold text-green-600">$60,000</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">Annual Revenue Impact</span>
+                                <span class="font-bold text-green-600">$80,000</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b">
+                                <span class="text-gray-600">5-Year Total Benefit</span>
+                                <span class="font-bold text-green-600">$700,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <!-- ROI metrics -->
+                    <div class="stat-card bg-gray-50 p-4 rounded-lg text-center">
+                        <h4 class="text-gray-500 text-sm font-medium mb-1">First-Year ROI</h4>
+                        <div class="text-3xl font-bold text-green-600">
+                            68%
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Return in first 12 months
+                        </p>
+                    </div>
+                    
+                    <div class="stat-card bg-gray-50 p-4 rounded-lg text-center">
+                        <h4 class="text-gray-500 text-sm font-medium mb-1">5-Year ROI</h4>
+                        <div class="text-3xl font-bold text-green-600">
+                            179%
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Return over 5-year period
+                        </p>
+                    </div>
+                    
+                    <div class="stat-card bg-gray-50 p-4 rounded-lg text-center">
+                        <h4 class="text-gray-500 text-sm font-medium mb-1">Payback Period</h4>
+                        <div class="text-3xl font-bold text-purple-600">
+                            8.7 <span class="text-lg">months</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Time to recoup investment
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- ROI Visualization -->
+                <div class="mb-8">
+                    <h4 class="font-medium mb-4">5-Year Financial Projection</h4>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="border-b pb-2 mb-2">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-medium">Year 1</span>
+                                <span class="text-sm font-medium">$29,000</span>
+                            </div>
+                            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-4 bg-purple-500 graph-bar" style="width: 38%;"></div>
+                            </div>
+                        </div>
+                        <div class="border-b pb-2 mb-2">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-medium">Year 2</span>
+                                <span class="text-sm font-medium">$105,000</span>
+                            </div>
+                            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-4 bg-purple-500 graph-bar" style="width: 58%;"></div>
+                            </div>
+                        </div>
+                        <div class="border-b pb-2 mb-2">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-medium">Year 3</span>
+                                <span class="text-sm font-medium">$181,000</span>
+                            </div>
+                            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-4 bg-purple-500 graph-bar" style="width: 69%;"></div>
+                            </div>
+                        </div>
+                        <div class="border-b pb-2 mb-2">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-medium">Year 4</span>
+                                <span class="text-sm font-medium">$257,000</span>
+                            </div>
+                            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-4 bg-purple-500 graph-bar" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-medium">Year 5</span>
+                                <span class="text-sm font-medium">$333,000</span>
+                            </div>
+                            <div class="h-4 w-full bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-4 bg-purple-500 graph-bar" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 text-right">*All values represent net cumulative return after costs</p>
+                </div>
+                
+                <div class="p-4 border-l-4 border-purple-500 bg-purple-50">
+                    <h4 class="font-medium mb-2">Implementation Recommendation</h4>
+                    <p class="text-sm">
+                        <span class="font-bold text-green-600">Strongly Recommended</span>: This implementation shows a strong first-year ROI with excellent long-term returns. The business case is compelling and implementation should be prioritized. With a projected payback period of less than 9 months, this AI implementation represents an efficient use of capital with significant ROI potential. Consider accelerated implementation to capture value sooner.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Case study comparison -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-lg font-bold mb-4 flex items-center">
+                    <i class="fas fa-building text-purple-600 mr-3"></i>
+                    Industry Benchmarks
+                </h3>
+                <p class="text-sm text-gray-600 mb-6">
+                    How your projected ROI compares to documented media industry implementations
+                </p>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Use Case</th>
+                                <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Implementation</th>
+                                <th class="px-4 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">1-Year ROI</th>
+                                <th class="px-4 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Payback Period</th>
+                                <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key Outcomes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="bg-green-50">
+                                <td class="px-4 py-3 text-sm font-medium">Your Projection</td>
+                                <td class="px-4 py-3 text-sm">Focused</td>
+                                <td class="px-4 py-3 text-sm text-right font-bold">68%</td>
+                                <td class="px-4 py-3 text-sm text-right font-bold">8.7 months</td>
+                                <td class="px-4 py-3 text-sm">Customized to your parameters</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm font-medium">Content Creation</td>
+                                <td class="px-4 py-3 text-sm">Focused (API)</td>
+                                <td class="px-4 py-3 text-sm text-right">68%</td>
+                                <td class="px-4 py-3 text-sm text-right">7.3 months</td>
+                                <td class="px-4 py-3 text-sm">73% reduction in production time</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm font-medium">Content Enhancement</td>
+                                <td class="px-4 py-3 text-sm">Comprehensive (RAG)</td>
+                                <td class="px-4 py-3 text-sm text-right">42%</td>
+                                <td class="px-4 py-3 text-sm text-right">9.5 months</td>
+                                <td class="px-4 py-3 text-sm">3.2x increase in content volume</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm font-medium">Personalization</td>
+                                <td class="px-4 py-3 text-sm">Focused (API)</td>
+                                <td class="px-4 py-3 text-sm text-right">83%</td>
+                                <td class="px-4 py-3 text-sm text-right">6.2 months</td>
+                                <td class="px-4 py-3 text-sm">47% improvement in engagement</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm font-medium">Workflow Automation</td>
+                                <td class="px-4 py-3 text-sm">Focused (Agentic)</td>
+                                <td class="px-4 py-3 text-sm text-right">112%</td>
+                                <td class="px-4 py-3 text-sm text-right">4.8 months</td>
+                                <td class="px-4 py-3 text-sm">42% reduction in production costs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Media Testimonials -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-lg font-bold mb-6 flex items-center">
+                    <i class="fas fa-quote-left text-purple-600 mr-3"></i>
+                    Media Industry Implementation Success Stories
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/The_New_York_Times_logo.png" alt="New York Times" class="h-8 publication-logo">
+                    </div>
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Associated_Press_logo_2012.svg/1200px-Associated_Press_logo_2012.svg.png" alt="Associated Press" class="h-8 publication-logo">
+                    </div>
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Bloomberg_logo.svg/1200px-Bloomberg_logo.svg.png" alt="Bloomberg" class="h-8 publication-logo">
+                    </div>
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/CNN_logo.svg/1200px-CNN_logo.svg.png" alt="CNN" class="h-8 publication-logo">
+                    </div>
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN_International_logo.svg/1200px-CNN_International_logo.svg.png" alt="BBC" class="h-8 publication-logo">
+                    </div>
+                    <div class="flex items-center justify-center p-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/The_Washington_Post_logo.svg/2560px-The_Washington_Post_logo.svg.png" alt="Washington Post" class="h-8 publication-logo">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <blockquote class="text-gray-700 italic mb-4">
+                            "Our content AI implementation delivered a 92% ROI in the first year, with a significant portion coming from efficiency gains. We've been able to nearly double our content output while maintaining high editorial standards."
+                        </blockquote>
+                        <div class="text-sm text-gray-500 font-medium">
+                            — Chief Product Officer, Global News Organization
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <blockquote class="text-gray-700 italic mb-4">
+                            "The key to our successful AI implementation was focusing on clear, measurable metrics from day one. We tied every aspect of the project to business outcomes, which helped us achieve a 7.2-month payback period."
+                        </blockquote>
+                        <div class="text-sm text-gray-500 font-medium">
+                            — CTO, Digital First Media Company
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download & Take Action -->
+            <div class="bg-purple-800 text-white rounded-xl shadow-md p-8 mb-10">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0 md:mr-10">
+                        <h3 class="text-xl font-bold mb-2">Ready to Make Your Business Case?</h3>
+                        <p class="mb-4">Download a detailed ROI report with executive-ready presentation materials</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button class="bg-white text-purple-800 hover:bg-purple-100 py-2 px-4 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
+                                <i class="fas fa-file-pdf mr-2"></i> PDF Report
+                            </button>
+                            <button class="bg-white text-purple-800 hover:bg-purple-100 py-2 px-4 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
+                                <i class="fas fa-file-powerpoint mr-2"></i> Presentation
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-purple-700 p-6 rounded-lg">
+                        <h4 class="font-bold mb-3">Next Steps</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-purple-300 mt-1 mr-2"></i>
+                                <span>Complete organizational readiness assessment</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-purple-300 mt-1 mr-2"></i>
+                                <span>Use architecture decision framework to select approach</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-purple-300 mt-1 mr-2"></i>
+                                <span>Generate your 90-day implementation roadmap</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-arrow-right text-purple-300 mt-1 mr-2"></i>
+                                <span class="font-bold">Share ROI projection with executive team</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-purple-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">MediaAI Toolkit</h3>
+                    <p class="text-purple-200">Strategic tools for media AI implementation</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-purple-200 transition-colors">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-purple-800">
+                <p class="text-purple-200 mb-4 md:mb-0">© 2025 Himanshu Joshi. All rights reserved.</p>
+                <div class="flex items-center">
+                    <a href="https://github.com/HimJoe" class="text-purple-200 hover:text-white transition-colors flex items-center">
+                        <i class="fab fa-github mr-2"></i>
+                        github.com/HimJoe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
